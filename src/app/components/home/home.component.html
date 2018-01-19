@@ -1,0 +1,30 @@
+<div class="container">
+  <div *ngIf="loading">Loading please wait....</div>
+  <input [(ngModel)]="walletId" type="text">
+  <button type="button" (click)="getData()">Get Data</button><br/>
+  {{shareArray}}<br/>
+  <ng-container *ngIf="walletData">
+  <span style="color: blue">wallet balance: </span>{{walletData.effectiveBalanceNXT}}<br/>
+  <hr/>
+</ng-container>
+<ng-container *ngIf="blockChainStatus">
+  <span style="color: blue">Last Block: </span>{{blockChainStatus.numberOfBlocks}}<br/>
+  <hr/>
+</ng-container>
+<ng-container *ngIf="blockData">
+  <span style="color: blue">block reward: </span>{{blockData.blocks[0].blockReward}}<br/>
+  <hr/>
+</ng-container>
+<ng-container *ngIf="paymentData">
+  <span style="color: blue">shareList: </span>{{ paymentData.blockPaymentList[0].shareList }}<br/>
+  <hr/>
+  <span style="color: blue">share list 2?: </span>{{ paymentData.blockPaymentList[1].shareList }}<br/>
+  <hr/>
+  <span style="color: blue">pending payments: </span>{{ paymentData.pendingPaymentList }}<br/>
+  <hr/>
+  <span style="color: blue">sent payments: </span>{{ paymentData.sentPaymentList }}<br/>
+  <hr/>
+  <span style="color: blue">all payment data: </span>{{ paymentData }}<br/>
+  <hr/>
+</ng-container>
+</div>
