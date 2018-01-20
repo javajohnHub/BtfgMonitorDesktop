@@ -122,8 +122,10 @@ export class HomeComponent implements OnInit {
         this.shareList.forEach(share => {
 
           if (share.accountId == parseInt(this.walletId, 10)) {
-
-            this.shareArray.push(share.share)
+            if(!this.shareArray.includes(share.share)){
+              this.shareArray.push(share.share)
+            
+            }
           }
         })
 
