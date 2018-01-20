@@ -52,28 +52,29 @@ export class HomeComponent implements OnInit {
           this.total = this.totalShares.reduce((a, b) => a + b, 0);
 
         })
-      
+        this.blockArray.reverse();
         if (this.shareList) {
-          for(let i = 0; i < this.paymentData.blockPaymentList.length; i++){
-            for(let x = 0; x < this.paymentData.blockPaymentList[i].shareList.length; x++){
-              if(this.paymentData.blockPaymentList[i].shareList[x].accountId == this.walletId){
+          for (let i = 0; i < this.paymentData.blockPaymentList.length; i++) {
+            for (let x = 0; x < this.paymentData.blockPaymentList[i].shareList.length; x++) {
+              if (this.paymentData.blockPaymentList[i].shareList[x].accountId == this.walletId) {
                 this.shareArray.push(this.paymentData.blockPaymentList[i].shareList[x].share);
               }
             }
           }
           this.minerTotal = this.shareArray.reduce((a, b) => a + b, 0);
-          //console.log(this.shareArray)
-        if (this.sentPayments) {
-          this.sentPayments.forEach(payment => {
-            if (payment.accountId == this.walletId) {
-              this.lastPayment = payment;
-            }
-          })
+          if (this.sentPayments) {
+            this.sentPayments.forEach(payment => {
+              if (payment.accountId == this.walletId) {
+                this.lastPayment = payment;
+              }
+            })
 
+          }
+          this.loading = false;
         }
-        this.loading = false;
-      });
-
+        this.shareArray.reverse();
+        });
+      
     this.loading = true;
     this.blockChainStatus = this._btfgService.getBlockchainStatus()
       .subscribe(data => {
@@ -89,8 +90,8 @@ export class HomeComponent implements OnInit {
         this.blockReward = this.blockData.blocks[0].blockReward;
         this.loading = false;
       });
-  }
-
+      
+    }
   getData() {
     this.loading = true;
     if (!localStorage.getItem('walletId')) {

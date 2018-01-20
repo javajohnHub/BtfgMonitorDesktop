@@ -6,10 +6,10 @@
   <ng-container *ngIf="walletData">
   <span style="color: blue">wallet balance: </span>{{balance}}<br/>
   <hr/>
-</ng-container>
-<ng-container *ngIf="blockChainStatus">
-  <span style="color: blue">Last Block: </span>{{ lastBlock}}<br/>
+  <ng-container *ngIf="paymentData">
+  <span style="color: blue">pending payment: </span>{{ pendingPayment  || 'None'}}<br/>
   <hr/>
+</ng-container>
 </ng-container>
 <ng-container *ngIf="blockData">
   <span style="color: blue">block reward: </span>{{blockReward}}<br/>
@@ -22,8 +22,10 @@
   </div><br/>
   {{ minerTotal + ' / ' + total}}
   <br/>
+  <ng-container *ngIf="blockChainStatus">
+  <span style="color: blue">Last Block: </span>{{ lastBlock}}<br/>
   <hr/>
-  <span style="color: blue">pending payment: </span>{{ pendingPayment  || 'None'}}<br/>
+</ng-container>
   <hr/>
   <span style="color: blue">last payment: </span>{{ lastPayment  || 'None'}}<br/>
   <hr/>
