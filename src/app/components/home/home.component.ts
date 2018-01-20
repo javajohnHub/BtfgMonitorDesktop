@@ -25,7 +25,10 @@ export class HomeComponent implements OnInit {
   blockReward;
   sentPayment;
   shareList3;
-  totalShares;
+  totalShares = [];
+  blockArray = [];
+  total;
+  minerTotal;
   constructor(private _btfgService: BtfgService) { }
 
   ngOnInit() {
@@ -44,36 +47,22 @@ export class HomeComponent implements OnInit {
         this.sentPayment = this.sentPayments[this.walletId];
         this.shareList = this.paymentData.blockPaymentList[0].shareList;
         this.paymentData.blockPaymentList.forEach(blockPayment => {
-          this.totalShares = parseFloat(this.totalShares) + parseFloat(blockPayment.totalShare);
-          console.log(this.totalShares.toFixed(8) )
+          this.blockArray.push(blockPayment.height)
+          this.totalShares.push(blockPayment.totalShare);
+          this.total = this.totalShares.reduce((a, b) => a + b, 0);
+
         })
-        this.shareList2 = this.paymentData.blockPaymentList[1].shareList;
-        this.shareList3 = this.paymentData.blockPaymentList[2].shareList;
+      
         if (this.shareList) {
-          this.shareList.forEach(share => {
-            //console.log(share['accountId'], this.walletId)
-            if (share['accountId'] == this.walletId) {
-              //console.log(share)
-              this.shareArray.push(share);
+          for(let i = 0; i < this.paymentData.blockPaymentList.length; i++){
+            for(let x = 0; x < this.paymentData.blockPaymentList[i].shareList.length; x++){
+              if(this.paymentData.blockPaymentList[i].shareList[x].accountId == this.walletId){
+                this.shareArray.push(this.paymentData.blockPaymentList[i].shareList[x].share);
+              }
             }
-          })
-        }
-        if (this.shareList2) {
-          this.shareList2.forEach(share => {
-            if (share['accountId'] == this.walletId) {
-              this.shareArray.push(share);
-            }
-
-          })
-        }
-        if (this.shareList3) {
-          this.shareList3.forEach(share => {
-            if (share['accountId'] == this.walletId) {
-              this.shareArray.push(share);
-            }
-
-          })
-        }
+          }
+          this.minerTotal = this.shareArray.reduce((a, b) => a + b, 0);
+          //console.log(this.shareArray)
         if (this.sentPayments) {
           this.sentPayments.forEach(payment => {
             if (payment.accountId == this.walletId) {
