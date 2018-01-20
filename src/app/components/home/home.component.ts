@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
   address;
   name;
   description;
+  estimateBaseline;
   constructor(private _btfgService: BtfgService) { }
 
   ngOnInit() {
@@ -99,6 +100,7 @@ export class HomeComponent implements OnInit {
       .subscribe(data => {
         this.blockData = data;
         this.blockReward = this.blockData.blocks[0].blockReward;
+        this.estimateBaseline = (this.minerTotal * this.blockReward) / this.total;
         this.loading = false;
       });
       

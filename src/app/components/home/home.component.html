@@ -11,16 +11,15 @@
   
   <ng-container *ngIf="paymentData">
   <span style="color: blue">pending payment: </span>{{ pendingPayment  || 'None'}}<br/>
+  <span style="color: blue">Estimated Revenue: </span>{{estimateBaseline}}
   <hr/>
 </ng-container>
+
 </ng-container>
 
 <ng-container *ngIf="paymentData">
     <ng-container *ngIf="blockChainStatus">
         <span style="color: blue">Current Block: </span>{{ lastBlock}}
-        <ng-container *ngIf="blockData">
-            <span style="color: blue">block reward: </span>{{blockReward}}<br/>
-          </ng-container>
       </ng-container>
       <br/>
   <div *ngFor="let share of shareArray; let i = index">
