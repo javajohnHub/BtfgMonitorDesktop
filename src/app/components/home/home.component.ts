@@ -29,6 +29,10 @@ export class HomeComponent implements OnInit {
   blockArray = [];
   total;
   minerTotal;
+  account;
+  address;
+  name;
+  description;
   constructor(private _btfgService: BtfgService) { }
 
   ngOnInit() {
@@ -46,12 +50,16 @@ export class HomeComponent implements OnInit {
         this.sentPayments = this.paymentData.sentPaymentList;
         this.sentPayment = this.sentPayments[this.walletId];
         this.shareList = this.paymentData.blockPaymentList[0].shareList;
-        this.paymentData.blockPaymentList.forEach(blockPayment => {
-          this.blockArray.push(blockPayment.height)
-          this.totalShares.push(blockPayment.totalShare);
-          this.total = this.totalShares.reduce((a, b) => a + b, 0);
-
+        if(this.paymentData.blockPaymentList){
+          this.paymentData.blockPaymentList.forEach(blockPayment => {
+            this.blockArray.push(blockPayment.height)
+            this.totalShares.push(blockPayment.totalShare);
+            this.total = this.totalShares.reduce((a, b) => a + b, 0);
+  
+        
+       
         })
+      }
         this.blockArray.reverse();
         if (this.shareList) {
           for (let i = 0; i < this.paymentData.blockPaymentList.length; i++) {
@@ -63,11 +71,11 @@ export class HomeComponent implements OnInit {
           }
           this.minerTotal = this.shareArray.reduce((a, b) => a + b, 0);
           if (this.sentPayments) {
-            this.sentPayments.forEach(payment => {
-              if (payment.accountId == this.walletId) {
-                this.lastPayment = payment;
+            for(let j = 0; j < this.sentPayments.length; j++){
+              if(this.sentPayments[j].accountId == this.walletId){
+                this.lastPayment = this.sentPayments[j].amount;
               }
-            })
+            }
 
           }
           this.loading = false;
@@ -101,6 +109,10 @@ export class HomeComponent implements OnInit {
     this.walletData = this._btfgService.getWalletInfo(this.walletId)
       .subscribe(data => {
         this.walletData = data;
+        this.account = this.walletData.account;
+        this.name = this.walletData.name;
+        this.description = this.walletData.description;
+        this.address = this.walletData.accountRS;
         this.balance = this.walletData.effectiveBalanceNXT;
         this.shareList.forEach(share => {
 
