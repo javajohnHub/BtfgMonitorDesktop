@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
       .subscribe(data => {
         this.paymentData = data;
         this.pendingPayments = this.paymentData.pendingPaymentList;
-        this.pendingPayment = this.pendingPayments[this.walletId];
+        this.pendingPayment = this.pendingPayments[this.walletId].toFixed(8);
         this.sentPayments = this.paymentData.sentPaymentList;
         this.sentPayment = this.sentPayments[this.walletId];
         this.shareList = this.paymentData.blockPaymentList[0].shareList;
@@ -65,10 +65,13 @@ export class HomeComponent implements OnInit {
           for (let i = 0; i < this.paymentData.blockPaymentList.length; i++) {
             for (let x = 0; x < this.paymentData.blockPaymentList[i].shareList.length; x++) {
               if (this.paymentData.blockPaymentList[i].shareList[x].accountId == this.walletId) {
+              
                 this.shareArray.push(this.paymentData.blockPaymentList[i].shareList[x].share);
+                
               }
             }
           }
+          
           this.minerTotal = this.shareArray.reduce((a, b) => a + b, 0);
           if (this.sentPayments) {
             for(let j = 0; j < this.sentPayments.length; j++){
@@ -113,7 +116,7 @@ export class HomeComponent implements OnInit {
         this.name = this.walletData.name;
         this.description = this.walletData.description;
         this.address = this.walletData.accountRS;
-        this.balance = this.walletData.effectiveBalanceNXT;
+        this.balance = (this.walletData.effectiveBalanceNXT / 100000000).toFixed(8)
         this.shareList.forEach(share => {
 
           if (share.accountId == parseInt(this.walletId, 10)) {

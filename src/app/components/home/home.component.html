@@ -4,11 +4,11 @@
   <button type="button" (click)="getData()">Get Data</button><br/>
 
   <ng-container *ngIf="walletData">
-  <span style="color: blue">wallet info: </span>{{balance}}<br/>
-  {{account}}<br/>
-  {{address}}<br/>
-  {{name}}<br/>
-  {{description}}<br/>
+      <span style="color: blue">Name: </span>{{name}}<br/>
+      <span style="color: blue">description: </span>{{description}}<br/>
+  <span style="color: blue">balance: </span>{{balance}}<br/>
+  <span style="color: blue">address: </span>{{address}}<br/>
+  
   <ng-container *ngIf="paymentData">
   <span style="color: blue">pending payment: </span>{{ pendingPayment  || 'None'}}<br/>
   <hr/>
@@ -16,18 +16,19 @@
 </ng-container>
 
 <ng-container *ngIf="paymentData">
-    <span style="color: blue">shares: </span>
+    <ng-container *ngIf="blockChainStatus">
+        <span style="color: blue">Current Block: </span>{{ lastBlock}}
+        <ng-container *ngIf="blockData">
+            <span style="color: blue">block reward: </span>{{blockReward}}<br/>
+          </ng-container>
+      </ng-container>
+      <br/>
   <div *ngFor="let share of shareArray; let i = index">
-      <span style="color: blue">{{blockArray[i]}}</span> {{share}} 
+      <span style="color: blue">{{blockArray[i]}}: </span> {{share}} 
   </div><br/>
   <span style="color: blue">Total Share: </span>{{ minerTotal + ' / ' + total}}
   <br/>
-  <ng-container *ngIf="blockChainStatus">
-  <span style="color: blue">Last Block: </span>{{ lastBlock}}
-  <ng-container *ngIf="blockData">
-      <span style="color: blue">block reward: </span>{{blockReward}}<br/>
-    </ng-container>
-</ng-container>
+  
   <hr/>
   <span style="color: blue">last payment: </span>{{ lastPayment  || 'None'}}<br/>
   <hr/>
