@@ -21,7 +21,8 @@ function createWindow() {
     x: 0,
     y: 0,
     width: 800,
-    height: size.height
+    height: size.height,
+    transparent: true
   });
 
   // and load the index.html of the app.
