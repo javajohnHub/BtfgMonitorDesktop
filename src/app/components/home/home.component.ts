@@ -80,10 +80,14 @@ export class HomeComponent implements OnInit {
         if (this.paymentData.blockPaymentList) {
           this.paymentData.blockPaymentList.forEach(blockPayment => {
             this.blockArray.push(blockPayment.height)
-            this.totalShares.push(blockPayment.totalShare);
-            this.total = this.totalShares.reduce((a, b) => a + b, 0);
+            if (!this.totalShares.includes(blockPayment.totalShare)) {
+              this.totalShares.push(blockPayment.totalShare);
+            }
+            
+            
 
           })
+          this.total = this.totalShares.reduce((a, b) => a + b, 0);
         }
         
         if (this.shareList) {

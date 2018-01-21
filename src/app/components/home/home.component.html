@@ -30,9 +30,9 @@
       </ng-container>
       <br/>
   <div *ngFor="let share of shareArray; let i = index">
-      <span style="color: darkgoldenrod">{{blockArray[i]}}: </span> {{share}} 
+      <span style="color: darkgoldenrod">{{blockArray[i]}}: </span> {{share | number:'0.8-8'}} 
   </div><br/>
-  <span style="color: darkgoldenrod">Total Share: </span>{{ minerTotal | number:'0.8-8'}} / {{ total | number:'0.8-8'}}
+  <span style="color: darkgoldenrod">Total Share: </span>{{ minerTotal | number:'0.4-4'}} / {{ total | number:'0.4-4'}}
   <br/>
   
   <hr/>
