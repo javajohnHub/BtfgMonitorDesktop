@@ -18,7 +18,7 @@
   
   <ng-container *ngIf="paymentData">
   <span style="color: darkgoldenrod">pending payment: </span>{{ pendingPayment  || 'None'}}<br/>
-  <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimateBaseline}}
+  <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimateBaseline | number:'0.8-8'}}
   <hr/>
 </ng-container>
 
@@ -32,7 +32,7 @@
   <div *ngFor="let share of shareArray; let i = index">
       <span style="color: darkgoldenrod">{{blockArray[i]}}: </span> {{share}} 
   </div><br/>
-  <span style="color: darkgoldenrod">Total Share: </span>{{ minerTotal + ' / ' + total}}
+  <span style="color: darkgoldenrod">Total Share: </span>{{ minerTotal | number:'0.8-8'}} / {{ total | number:'0.8-8'}}
   <br/>
   
   <hr/>
