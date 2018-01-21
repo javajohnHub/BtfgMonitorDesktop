@@ -39,10 +39,36 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('walletId')) {
       this.walletId = localStorage.getItem('walletId');
-      this.getData();
     }
-    this.loading = true;
+    this.reloadData();
+    setInterval(() => {
+      this.reloadData()
+      console.log('reloaded');
+    }, 60000 )
+  }
 
+  reloadData() {
+    if (!localStorage.getItem('walletId')) {
+      localStorage.setItem('walletId', this.walletId)
+    }
+    this.walletData = this._btfgService.getWalletInfo(this.walletId)
+      .subscribe(data => {
+        this.walletData = data;
+        this.account = this.walletData.account;
+        this.name = this.walletData.name;
+        this.description = this.walletData.description;
+        this.address = this.walletData.accountRS;
+        this.balance = (this.walletData.effectiveBalanceNXT / 100000000).toFixed(8)
+        this.shareList.forEach(share => {
+
+          if (share.accountId === parseInt(this.walletId, 10)) {
+            if (!this.shareArray.includes(share.share)) {
+              this.shareArray.push(share.share)
+            }
+          }
+        })
+
+      })
     this.paymentData = this._btfgService.getPaymentInfo()
       .subscribe(data => {
         this.paymentData = data;
@@ -51,42 +77,38 @@ export class HomeComponent implements OnInit {
         this.sentPayments = this.paymentData.sentPaymentList;
         this.sentPayment = this.sentPayments[this.walletId];
         this.shareList = this.paymentData.blockPaymentList[0].shareList;
-        if(this.paymentData.blockPaymentList){
+        if (this.paymentData.blockPaymentList) {
           this.paymentData.blockPaymentList.forEach(blockPayment => {
             this.blockArray.push(blockPayment.height)
             this.totalShares.push(blockPayment.totalShare);
             this.total = this.totalShares.reduce((a, b) => a + b, 0);
-  
+
+          })
+        }
         
-       
-        })
-      }
-        this.blockArray.reverse();
         if (this.shareList) {
           for (let i = 0; i < this.paymentData.blockPaymentList.length; i++) {
             for (let x = 0; x < this.paymentData.blockPaymentList[i].shareList.length; x++) {
-              if (this.paymentData.blockPaymentList[i].shareList[x].accountId == this.walletId) {
-              
+              if (this.paymentData.blockPaymentList[i].shareList[x].accountId === this.walletId) {
+                if (!this.shareArray.includes(this.paymentData.blockPaymentList[i].shareList[x].share)) {
                 this.shareArray.push(this.paymentData.blockPaymentList[i].shareList[x].share);
-                
+                }
               }
             }
           }
-          
           this.minerTotal = this.shareArray.reduce((a, b) => a + b, 0);
           if (this.sentPayments) {
-            for(let j = 0; j < this.sentPayments.length; j++){
-              if(this.sentPayments[j].accountId == this.walletId){
+            for (let j = 0; j < this.sentPayments.length; j++) {
+              console.log(this.sentPayments[j].accountId === this.walletId)
+              if (this.sentPayments[j].accountId === this.walletId) {
                 this.lastPayment = this.sentPayments[j].amount;
               }
             }
-
           }
           this.loading = false;
         }
-        this.shareArray.reverse();
-        });
-      
+        
+      });
     this.loading = true;
     this.blockChainStatus = this._btfgService.getBlockchainStatus()
       .subscribe(data => {
@@ -103,35 +125,6 @@ export class HomeComponent implements OnInit {
         this.estimateBaseline = (this.minerTotal * this.blockReward) / this.total;
         this.loading = false;
       });
-      
-    }
-  getData() {
-    this.loading = true;
-    if (!localStorage.getItem('walletId')) {
-      localStorage.setItem('walletId', this.walletId)
-    }
-
-    this.walletData = this._btfgService.getWalletInfo(this.walletId)
-      .subscribe(data => {
-        this.walletData = data;
-        this.account = this.walletData.account;
-        this.name = this.walletData.name;
-        this.description = this.walletData.description;
-        this.address = this.walletData.accountRS;
-        this.balance = (this.walletData.effectiveBalanceNXT / 100000000).toFixed(8)
-        this.shareList.forEach(share => {
-
-          if (share.accountId == parseInt(this.walletId, 10)) {
-            if(!this.shareArray.includes(share.share)){
-              this.shareArray.push(share.share)
-            
-            }
-          }
-        })
-
-      })
-    this.loading = false;
-
   }
 
 }

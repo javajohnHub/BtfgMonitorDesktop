@@ -1,19 +1,20 @@
 <div class="container">
         
         <div class="ui-g ui-fluid">
-                <div class="ui-g-12 ui-md-4">
+                <div class="ui-g-12 ui-md-12">
                     <div class="ui-inputgroup">
-                        <button pButton type="button" label="Get Info" (onClick)="getData()"></button>
+                        <button pButton type="button" label="Get Info" (onClick)="reloadData()"></button>
                         <input [(ngModel)]="walletId" type="text" pInputText placeholder="Wallet ID">         
                     </div>
                 </div>
                 </div>
   <div *ngIf="loading">Loading please wait....</div>
   <ng-container *ngIf="walletData">
+        <span style="color: darkgoldenrod">address: </span>{{address}}<br/>
       <span style="color: darkgoldenrod">Name: </span>{{name}}<br/>
       <span style="color: darkgoldenrod">description: </span>{{description}}<br/>
   <span style="color: darkgoldenrod">balance: </span>{{balance}}<br/>
-  <span style="color: darkgoldenrod">address: </span>{{address}}<br/>
+  
   
   <ng-container *ngIf="paymentData">
   <span style="color: darkgoldenrod">pending payment: </span>{{ pendingPayment  || 'None'}}<br/>
@@ -25,7 +26,7 @@
 
 <ng-container *ngIf="paymentData">
     <ng-container *ngIf="blockChainStatus">
-        <span style="color: darkgoldenrod">Current Block: </span>{{ lastBlock}}
+        <span style="color: darkgoldenrod">Current Block: </span><span style="color: green;">{{ lastBlock}}</span>
       </ng-container>
       <br/>
   <div *ngFor="let share of shareArray; let i = index">
