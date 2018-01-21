@@ -1,42 +1,48 @@
 <div class="container">
-        
-        <div class="ui-g ui-fluid">
-                <div class="ui-g-12 ui-md-12">
-                    <div class="ui-inputgroup">
-                        <button pButton type="button" label="Get Info" (onClick)="reloadData()"></button>
-                        <input [(ngModel)]="walletId" type="text" pInputText placeholder="Wallet ID">         
-                    </div>
-                </div>
-                </div>
-  <div *ngIf="loading">Loading please wait....</div>
-  <ng-container *ngIf="walletData">
-        <span style="color: darkgoldenrod">address: </span>{{address}}<br/>
-      <span style="color: darkgoldenrod">Name: </span>{{name}}<br/>
-      <span style="color: darkgoldenrod">description: </span>{{description}}<br/>
-  <span style="color: darkgoldenrod">balance: </span>{{balance}}<br/>
-  
-  
-  <ng-container *ngIf="paymentData">
-  <span style="color: darkgoldenrod">pending payment: </span>{{ pendingPayment  || 'None'}}<br/>
-  <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimateBaseline | number:'0.8-8'}}
-  <hr/>
-</ng-container>
+    <div *ngIf="loading">Loading please wait....</div>
+    <div class="ui-g ui-fluid">
+        <div class="ui-g-12 ui-md-12">
+            <div class="ui-inputgroup">
+                <button pButton type="button" label="Get Info" (onClick)="reloadData()"></button>
+                <input [(ngModel)]="walletId" type="text" pInputText placeholder="Wallet ID">
+            </div>
+        </div>
+    </div>
+    <ng-container *ngIf="walletData">
+        <span style="color: darkgoldenrod">address: </span>{{address}}
+        <br/>
+        <span style="color: darkgoldenrod">Name: </span>{{name}}
+        <br/>
+        <span style="color: darkgoldenrod">description: </span>{{description}}
+        <br/>
+        <span style="color: darkgoldenrod">balance: </span>{{balance}}
+        <br/>
 
-</ng-container>
 
-<ng-container *ngIf="paymentData">
-    <ng-container *ngIf="blockChainStatus">
-        <span style="color: darkgoldenrod">Current Block: </span><span style="color: green;">{{ lastBlock}}</span>
-      </ng-container>
-      <br/>
-  <div *ngFor="let share of shareArray; let i = index">
-      <span style="color: darkgoldenrod">{{blockArray[i]}}: </span> {{share | number:'0.8-8'}} 
-  </div><br/>
-  <span style="color: darkgoldenrod">Total Share: </span>{{ minerTotal | number:'0.4-4'}} / {{ total | number:'0.4-4'}}
-  <br/>
-  
-  <hr/>
-  <span style="color: darkgoldenrod">last payment: </span>{{ lastPayment  || 'None'}}<br/>
-  <hr/>
-</ng-container>
+        <ng-container *ngIf="paymentData">
+            <span style="color: darkgoldenrod">pending payment: </span>{{ pendingPayment || 'None'}}
+            <br/>
+            <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimateBaseline | number:'0.8-8'}}
+            <hr/>
+        </ng-container>
 
+    </ng-container>
+
+    <ng-container *ngIf="paymentData">
+        <ng-container *ngIf="blockChainStatus">
+            <span style="color: darkgoldenrod">Current Block: </span>
+            <span style="color: green;">{{ lastBlock}}</span>
+        </ng-container>
+        <br/>
+        <div *ngFor="let share of shareArray; let i = index">
+            <span style="color: darkgoldenrod">{{blockArray[i]}}: </span> {{share | number:'0.8-8'}}
+        </div>
+        <br/>
+        <span style="color: darkgoldenrod">Total Share: </span>{{ minerTotal | number:'0.4-4'}} / {{ total | number:'0.4-4'}}
+        <br/>
+
+        <hr/>
+        <!--<span style="color: darkgoldenrod">last payment: </span>{{ lastPayment || 'None'}}
+        <br/>
+        <hr/>-->
+    </ng-container>
