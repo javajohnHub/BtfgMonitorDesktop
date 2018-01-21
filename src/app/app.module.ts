@@ -18,7 +18,8 @@ import { ElectronService } from './providers/electron.service';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { BtfgService } from 'app/components/home/btfg.service';
-
+import {InputTextModule} from 'primeng/components/inputtext/inputtext';
+import {ButtonModule} from 'primeng/components/button/button';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -34,6 +35,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
+    InputTextModule,
+    ButtonModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
