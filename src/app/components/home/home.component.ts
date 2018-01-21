@@ -45,14 +45,14 @@ export class HomeComponent implements OnInit {
     this.lastUpdated = d.toLocaleString();
     this.reloadData();
     setInterval(() => {
-      let dte = new Date();
-      this.lastUpdated = dte.toLocaleString();
       this.reloadData()
       console.log('reloaded');
     }, 60000 )
   }
 
   reloadData() {
+    let d = new Date();
+    this.lastUpdated = d.toLocaleString();
     if (!localStorage.getItem('walletId')) {
       localStorage.setItem('walletId', this.walletId)
     }
