@@ -34,14 +34,19 @@ export class HomeComponent implements OnInit {
   name;
   description;
   estimateBaseline;
+  lastUpdated;
   constructor(private _btfgService: BtfgService) { }
 
   ngOnInit() {
     if (localStorage.getItem('walletId')) {
       this.walletId = localStorage.getItem('walletId');
     }
+    let d = new Date();
+    this.lastUpdated = d.toLocaleString();
     this.reloadData();
     setInterval(() => {
+      let dte = new Date();
+      this.lastUpdated = dte.toLocaleString();
       this.reloadData()
       console.log('reloaded');
     }, 60000 )
@@ -79,17 +84,15 @@ export class HomeComponent implements OnInit {
         this.shareList = this.paymentData.blockPaymentList[0].shareList;
         if (this.paymentData.blockPaymentList) {
           this.paymentData.blockPaymentList.forEach(blockPayment => {
-            this.blockArray.push(blockPayment.height)
-            if (!this.totalShares.includes(blockPayment.totalShare)) {
-              this.totalShares.push(blockPayment.totalShare);
+            if(!this.blockArray.includes(blockPayment.height)) {
+              this.blockArray.push(blockPayment.height)
+              if (!this.totalShares.includes(blockPayment.totalShare)) {
+                this.totalShares.push(blockPayment.totalShare);
+              }
             }
-            
-            
-
           })
           this.total = this.totalShares.reduce((a, b) => a + b, 0);
         }
-        
         if (this.shareList) {
           for (let i = 0; i < this.paymentData.blockPaymentList.length; i++) {
             for (let x = 0; x < this.paymentData.blockPaymentList[i].shareList.length; x++) {

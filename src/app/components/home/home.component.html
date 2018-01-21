@@ -8,19 +8,21 @@
             </div>
         </div>
     </div>
+    <span style="color: darkgoldenrod">Last Updated: </span>{{lastUpdated}}<br/>
+
     <ng-container *ngIf="walletData">
-        <span style="color: darkgoldenrod">address: </span>{{address}}
+        <span style="color: darkgoldenrod">Address: </span>{{address}}
         <br/>
         <span style="color: darkgoldenrod">Name: </span>{{name}}
         <br/>
-        <span style="color: darkgoldenrod">description: </span>{{description}}
+        <span style="color: darkgoldenrod">Description: </span>{{description}}
         <br/>
-        <span style="color: darkgoldenrod">balance: </span>{{balance}}
+        <span style="color: darkgoldenrod">Balance: </span>{{balance}}
         <br/>
 
 
         <ng-container *ngIf="paymentData">
-            <span style="color: darkgoldenrod">pending payment: </span>{{ pendingPayment || 'None'}}
+            <span style="color: darkgoldenrod">Pending: </span>{{ pendingPayment || 'None'}}
             <br/>
             <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimateBaseline | number:'0.8-8'}}
             <hr/>
