@@ -20,7 +20,7 @@ function createWindow() {
   win = new BrowserWindow({
     x: 0,
     y: 0,
-    width: 800,
+    width: 400,
     height: 500,
     transparent: true
   });
@@ -34,7 +34,7 @@ function createWindow() {
 
   // Open the DevTools.
   if (serve) {
-    win.webContents.openDevTools();
+    //win.webContents.openDevTools();
   }
 
   // Emitted when the window is closed.
