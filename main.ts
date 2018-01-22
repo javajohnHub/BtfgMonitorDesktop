@@ -21,7 +21,7 @@ function createWindow() {
     x: 0,
     y: 0,
     width: 400,
-    height: 5600,
+    height: 600,
     transparent: true
   });
 
