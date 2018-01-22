@@ -47,6 +47,7 @@ export class HomeComponent implements OnInit {
   }
 
   reloadData() {
+    this.loading = true;
     let d = new Date();
     this.lastUpdated = d.toLocaleString();
     this.walletData = this._btfgService.getWalletInfo(this.walletId)
@@ -100,32 +101,32 @@ export class HomeComponent implements OnInit {
           this.minerTotal = this.shareArray.reduce((a, b) => a + b, 0);
           if (this.sentPayments) {
             for (let j = 0; j < this.sentPayments.length; j++) {
-              console.log(this.sentPayments[j].accountId === this.walletId)
               if (this.sentPayments[j].accountId === this.walletId) {
                 this.lastPayment = this.sentPayments[j].amount;
               }
             }
           }
-          this.loading = false;
+         
         }
 
       });
-    this.loading = true;
+    
     this.blockChainStatus = this._btfgService.getBlockchainStatus()
       .subscribe(data => {
         this.blockChainStatus = data;
         this.lastBlock = this.blockChainStatus.numberOfBlocks;
-        this.loading = false;
+        
       });
 
-    this.loading = true;
+    
     this.blockData = this._btfgService.getBlockInfo()
       .subscribe(data => {
         this.blockData = data;
         this.blockReward = this.blockData.blocks[0].blockReward;
         this.estimateBaseline = (this.minerTotal * this.blockReward) / this.total;
-        this.loading = false;
+        
       });
+      this.loading = false;
   }
 
 }
