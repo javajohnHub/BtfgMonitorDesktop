@@ -38,9 +38,6 @@ export class HomeComponent implements OnInit {
   constructor(private _btfgService: BtfgService) { }
 
   ngOnInit() {
-    if (localStorage.getItem('walletId')) {
-      this.walletId = localStorage.getItem('walletId');
-    }
     let d = new Date();
     this.lastUpdated = d.toLocaleString();
     this.reloadData();
@@ -53,9 +50,7 @@ export class HomeComponent implements OnInit {
   reloadData() {
     let d = new Date();
     this.lastUpdated = d.toLocaleString();
-    if (!localStorage.getItem('walletId')) {
-      localStorage.setItem('walletId', this.walletId)
-    }
+    localStorage.setItem('walletId', this.walletId)
     this.walletData = this._btfgService.getWalletInfo(this.walletId)
       .subscribe(data => {
         this.walletData = data;
