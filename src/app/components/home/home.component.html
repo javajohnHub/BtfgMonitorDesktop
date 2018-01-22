@@ -1,5 +1,7 @@
 <div class="container">
-    <div *ngIf="loading">Loading please wait....</div>
+    
+        <span style="color: darkgoldenrod">Donations: </span><a href="https://explore.burst.cryptoguru.org/account/2502243242455039725" target="_blank">BURST-GZRF-Z4W4-DK8Y-42GG7</a><br/><br/>
+    <span style="color: darkgoldenrod">Last Updated: </span>{{lastUpdated}}<br/>
     <div class="ui-g ui-fluid">
         <div class="ui-g-12 ui-md-12">
             <div class="ui-inputgroup">
@@ -8,8 +10,6 @@
             </div>
         </div>
     </div>
-    <span style="color: darkgoldenrod">Last Updated: </span>{{lastUpdated}}<br/>
-
     <ng-container *ngIf="walletData">
         <span style="color: darkgoldenrod">Address: </span>{{address}}
         <br/>
@@ -24,24 +24,25 @@
         <ng-container *ngIf="paymentData">
             <span style="color: darkgoldenrod">Pending: </span>{{ pendingPayment | number:'0.8-8'}}
             <br/>
-            <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimateBaseline | number:'0.8-8'}}
+            <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimateBaseline | number:'0.8-8'}}<br/>
+            <span style="color: darkgoldenrod">Total Share: </span>{{ minerTotal | number:'0.4-4'}} / {{ total | number:'0.4-4'}}<br/>
             <hr/>
+            
+        <br/>
         </ng-container>
 
     </ng-container>
 
     <ng-container *ngIf="paymentData">
         <ng-container *ngIf="blockChainStatus">
-            <span style="color: darkgoldenrod">Current Block: </span>
-            <span style="color: green;">{{ lastBlock}}</span>
+            <span style="color: green;">{{ lastBlock}}:</span> Mining....
         </ng-container>
         <br/>
         <div *ngFor="let share of shareArray; let i = index">
             <span style="color: darkgoldenrod">{{blockArray[i]}}: </span> {{share | number:'0.8-8'}}
         </div>
         <br/>
-        <span style="color: darkgoldenrod">Total Share: </span>{{ minerTotal | number:'0.4-4'}} / {{ total | number:'0.4-4'}}
-        <br/>
+        
 
         <hr/>
         <!--<span style="color: darkgoldenrod">last payment: </span>{{ lastPayment || 'None'}}
