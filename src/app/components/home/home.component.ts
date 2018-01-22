@@ -40,17 +40,15 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     let d = new Date();
     this.lastUpdated = d.toLocaleString();
-    this.reloadData();
     setInterval(() => {
       this.reloadData()
       console.log('reloaded');
-    }, 60000 )
+    }, 60000)
   }
 
   reloadData() {
     let d = new Date();
     this.lastUpdated = d.toLocaleString();
-    localStorage.setItem('walletId', this.walletId)
     this.walletData = this._btfgService.getWalletInfo(this.walletId)
       .subscribe(data => {
         this.walletData = data;
@@ -58,28 +56,29 @@ export class HomeComponent implements OnInit {
         this.name = this.walletData.name;
         this.description = this.walletData.description;
         this.address = this.walletData.accountRS;
-        this.balance = (this.walletData.effectiveBalanceNXT / 100000000).toFixed(8)
-        this.shareList.forEach(share => {
+        this.balance = (this.walletData.effectiveBalanceNXT / 100000000);
+        if (this.shareList) {
+          this.shareList.forEach(share => {
 
-          if (share.accountId === parseInt(this.walletId, 10)) {
-            if (!this.shareArray.includes(share.share)) {
-              this.shareArray.push(share.share)
+            if (share.accountId === parseInt(this.walletId, 10)) {
+              if (!this.shareArray.includes(share.share)) {
+                this.shareArray.push(share.share)
+              }
             }
-          }
-        })
-
+          })
+        }
       })
     this.paymentData = this._btfgService.getPaymentInfo()
       .subscribe(data => {
         this.paymentData = data;
         this.pendingPayments = this.paymentData.pendingPaymentList;
-        this.pendingPayment = this.pendingPayments[this.walletId].toFixed(8);
+        this.pendingPayment = this.pendingPayments[this.walletId];
         this.sentPayments = this.paymentData.sentPaymentList;
         this.sentPayment = this.sentPayments[this.walletId];
         this.shareList = this.paymentData.blockPaymentList[0].shareList;
         if (this.paymentData.blockPaymentList) {
           this.paymentData.blockPaymentList.forEach(blockPayment => {
-            if(!this.blockArray.includes(blockPayment.height)) {
+            if (!this.blockArray.includes(blockPayment.height)) {
               this.blockArray.push(blockPayment.height)
               if (!this.totalShares.includes(blockPayment.totalShare)) {
                 this.totalShares.push(blockPayment.totalShare);
@@ -93,7 +92,7 @@ export class HomeComponent implements OnInit {
             for (let x = 0; x < this.paymentData.blockPaymentList[i].shareList.length; x++) {
               if (this.paymentData.blockPaymentList[i].shareList[x].accountId === this.walletId) {
                 if (!this.shareArray.includes(this.paymentData.blockPaymentList[i].shareList[x].share)) {
-                this.shareArray.push(this.paymentData.blockPaymentList[i].shareList[x].share);
+                  this.shareArray.push(this.paymentData.blockPaymentList[i].shareList[x].share);
                 }
               }
             }
@@ -109,7 +108,7 @@ export class HomeComponent implements OnInit {
           }
           this.loading = false;
         }
-        
+
       });
     this.loading = true;
     this.blockChainStatus = this._btfgService.getBlockchainStatus()
