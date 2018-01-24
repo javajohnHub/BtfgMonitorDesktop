@@ -5,7 +5,7 @@
     <div class="ui-g ui-fluid">
         <div class="ui-g-12 ui-md-12">
             <div class="ui-inputgroup">
-                <button pButton type="button" label="Get Info" (click)="reloadData()"></button>
+                <button pButton type="button" label="Get Info" (click)="reloadData()" [disabled]="disabled()"></button>
                 <input [(ngModel)]="walletId" type="text" pInputText placeholder="Wallet ID">
             </div>
         </div>
@@ -36,12 +36,7 @@
     <ng-container *ngIf="paymentData">
         <span style="color: green;">{{ currentBlock}}:</span> Mining....
         <br/>
-        <div *ngFor="let label of blockLabels; let i = index">
-            <span style="color: darkgoldenrod">{{label}}: </span> {{blockShares[i] | number:'0.8-8'}}
-        </div>
-        <br/>
-        
-
+        <p-chart type="bar" [data]="chartData"></p-chart>
         <hr/>
         <!--<span style="color: darkgoldenrod">last payment: </span>{{ lastPayment || 'None'}}
         <br/>

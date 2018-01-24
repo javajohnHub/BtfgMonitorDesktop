@@ -20,6 +20,8 @@ import { HomeComponent } from './components/home/home.component';
 import { BtfgService } from 'app/components/home/btfg.service';
 import {InputTextModule} from 'primeng/components/inputtext/inputtext';
 import {ButtonModule} from 'primeng/components/button/button';
+import {ChartModule} from 'primeng/chart';
+import 'chart.js/dist/Chart.min.js';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -37,6 +39,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     InputTextModule,
     ButtonModule,
+    ChartModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

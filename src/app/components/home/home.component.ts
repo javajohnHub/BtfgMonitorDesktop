@@ -28,14 +28,19 @@ export class HomeComponent implements OnInit {
   loading: boolean;
   blockReward: number;
   paymentData: Object;
-
-  constructor(private _btfgService: BtfgService) { }
+  chartData: any;
+  _disabled =  false;
+  click = 0;
+  constructor(private _btfgService: BtfgService) { 
+    
+  }
 
   ngOnInit() {
     this.loading = true;
     const d = new Date();
     this.lastUpdated = d.toLocaleString();
     this.loading = false;
+    this.click = 0;
     setInterval(() => {
       this.reloadData()
       console.log('reloaded');
@@ -43,13 +48,18 @@ export class HomeComponent implements OnInit {
   }
 
   reloadData() {
+    this.click++;
     const d = new Date();
     this.lastUpdated = d.toLocaleString();
     this._burstData();
+    setTimeout(() => {
+      this.click = 0;
+    }, 80000)
   }
 
   _burstData() {
     this.loading = true;
+    
     this._btfgService.getBlockchainStatus()
       .subscribe((data) => {
         this.loading = true;
@@ -102,6 +112,17 @@ export class HomeComponent implements OnInit {
         } else {
           this.estimatedRevenue = (this.minerShare * this.blockReward) / this.totalShare
         }
+        this.chartData = {
+          labels: this.blockLabels,
+          datasets: [
+              {
+                  label: 'Current Round Shares',
+                  backgroundColor: 'green',
+                  borderColor: '#1E88E5',
+                  data: this.blockShares
+              },
+          ]
+      }
         this.loading = false;
       })
     this._btfgService.getWalletInfo(this.walletId)
@@ -119,6 +140,13 @@ export class HomeComponent implements OnInit {
       }, (err) => console.log(err), () => {
         this.loading = false;
       })
+  }
+
+  disabled() {
+    
+    if (this.walletId && this.click > 0) {
+      return true;
+    }
   }
 
 }
