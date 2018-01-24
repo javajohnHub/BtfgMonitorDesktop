@@ -53,13 +53,15 @@ export class HomeComponent implements OnInit {
   }
 
   reloadData() {
-    this.click++;
-    const d = new Date();
-    this.lastUpdated = d.toLocaleString();
-    this._burstData();
-    setTimeout(() => {
-      this.click = 0;
-    }, 80000)
+    if (this.walletId) {
+      this.click++;
+      const d = new Date();
+      this.lastUpdated = d.toLocaleString();
+      this._burstData();
+      setTimeout(() => {
+        this.click = 0;
+      }, 80000)
+    }
   }
 
   _burstData() {
