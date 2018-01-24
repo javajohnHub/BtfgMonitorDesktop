@@ -67,6 +67,10 @@ export class HomeComponent implements OnInit {
     this._btfgService.getPaymentInfo()
       .subscribe((data) => {
         this.loading = true;
+        this.blockShares = [];
+        this.blockLabels = [];
+        this.minerShare = 0;
+        this.totalShare = 0;
         this.paymentData = data;
         if (this.paymentData) {
           if (this.paymentData['pendingPaymentList'][this.walletId]) {
