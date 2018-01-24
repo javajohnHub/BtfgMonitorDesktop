@@ -1,5 +1,14 @@
 <div class="container">
     <span *ngIf="loading">Loading.....</span><br/>
+    <ng-container *ngIf="paymentData">
+        <span style="color: green;">{{ currentBlock}}:</span> Mining....
+        <br/>
+        <p-chart type="bar" [data]="chartData"></p-chart>
+        <hr/>
+        <!--<span style="color: darkgoldenrod">last payment: </span>{{ lastPayment || 'None'}}
+        <br/>
+        <hr/>-->
+    </ng-container>
         <span style="color: darkgoldenrod">Donations: </span><a href="https://explore.burst.cryptoguru.org/account/2502243242455039725" target="_blank">BURST-GZRF-Z4W4-DK8Y-42GG7</a><br/><br/>
     <span style="color: darkgoldenrod">Last Updated: </span>{{lastUpdated}}<br/>
     <div class="ui-g ui-fluid">
@@ -33,12 +42,4 @@
 
     </ng-container>
 
-    <ng-container *ngIf="paymentData">
-        <span style="color: green;">{{ currentBlock}}:</span> Mining....
-        <br/>
-        <p-chart type="bar" [data]="chartData"></p-chart>
-        <hr/>
-        <!--<span style="color: darkgoldenrod">last payment: </span>{{ lastPayment || 'None'}}
-        <br/>
-        <hr/>-->
-    </ng-container>
+    
