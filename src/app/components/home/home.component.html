@@ -1,5 +1,5 @@
 <div class="container">
-    
+    <span *ngIf="loading">Loading.....</span><br/>
         <span style="color: darkgoldenrod">Donations: </span><a href="https://explore.burst.cryptoguru.org/account/2502243242455039725" target="_blank">BURST-GZRF-Z4W4-DK8Y-42GG7</a><br/><br/>
     <span style="color: darkgoldenrod">Last Updated: </span>{{lastUpdated}}<br/>
     <div class="ui-g ui-fluid">
@@ -17,15 +17,15 @@
         <br/>
         <span style="color: darkgoldenrod">Description: </span>{{description}}
         <br/>
-        <span style="color: darkgoldenrod">Balance: </span>{{balance | number:'0.8-8'}}
+        <span style="color: darkgoldenrod">Balance: </span>{{currentBalance | number:'0.8-8'}}
         <br/>
 
 
         <ng-container *ngIf="paymentData">
             <span style="color: darkgoldenrod">Pending: </span>{{ pendingPayment | number:'0.8-8'}}
             <br/>
-            <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimateBaseline | number:'0.8-8'}}<br/>
-            <span style="color: darkgoldenrod">Total Share: </span>{{ minerTotal | number:'0.4-4'}} / {{ total | number:'0.4-4'}}<br/>
+            <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimatedRevenue | number:'0.8-8'}}<br/>
+            <span style="color: darkgoldenrod">Total Share: </span>{{ minerShare | number:'0.4-4'}} / {{ totalShare | number:'0.4-4'}}<br/>
             <hr/>
             
         <br/>
@@ -34,12 +34,10 @@
     </ng-container>
 
     <ng-container *ngIf="paymentData">
-        <ng-container *ngIf="blockChainStatus">
-            <span style="color: green;">{{ lastBlock}}:</span> Mining....
-        </ng-container>
+        <span style="color: green;">{{ currentBlock}}:</span> Mining....
         <br/>
-        <div *ngFor="let share of shareArray; let i = index">
-            <span style="color: darkgoldenrod">{{blockArray[i]}}: </span> {{share | number:'0.8-8'}}
+        <div *ngFor="let label of blockLabels; let i = index">
+            <span style="color: darkgoldenrod">{{label}}: </span> {{blockShares[i] | number:'0.8-8'}}
         </div>
         <br/>
         

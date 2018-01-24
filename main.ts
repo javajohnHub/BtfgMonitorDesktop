@@ -22,7 +22,6 @@ function createWindow() {
     y: 0,
     width: 400,
     height: 600,
-    transparent: true
   });
 
   // and load the index.html of the app.
