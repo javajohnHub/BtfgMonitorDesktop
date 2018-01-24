@@ -31,6 +31,11 @@ export class HomeComponent implements OnInit {
   chartData: any;
   _disabled =  false;
   click = 0;
+  options: Object;
+  burstPrice: number;
+  walletAmountUSD: number;
+  pendingUSD: number;
+  estimatedUSD: number;
   constructor(private _btfgService: BtfgService) { 
     
   }
@@ -59,7 +64,13 @@ export class HomeComponent implements OnInit {
 
   _burstData() {
     this.loading = true;
-    
+    this._btfgService.getBurstInfo()
+    .subscribe((data) => {
+      this.burstPrice = data[0].price_usd;
+      this.walletAmountUSD = this.burstPrice * this.currentBalance;
+      this.pendingUSD = this.pendingPayment * this.burstPrice;
+      this.estimatedUSD = this.estimatedRevenue * this.burstPrice;
+    })
     this._btfgService.getBlockchainStatus()
       .subscribe((data) => {
         this.loading = true;
@@ -112,6 +123,7 @@ export class HomeComponent implements OnInit {
         } else {
           this.estimatedRevenue = (this.minerShare * this.blockReward) / this.totalShare
         }
+    
         this.chartData = {
           labels: this.blockLabels,
           datasets: [
