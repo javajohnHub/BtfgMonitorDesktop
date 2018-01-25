@@ -1,17 +1,19 @@
 <span style="color: darkgoldenrod">Last Updated: </span>{{lastUpdated}}<br/>
 <div class="container">
     <span *ngIf="loading">Loading.....</span><br/>
-    
-    <div style="background: white;color: black;"> Burst: ${{burstPrice}}</div><br/>
-        
     <div class="ui-g ui-fluid">
-        <div class="ui-g-12 ui-md-12">
-            <span class="ui-float-label">
+            <div class="ui-g-12">
+    <div style="background: white;color: black;"> <span style="color: darkgoldenrod">Burst:</span> <span style="color: green">${{burstPrice}}</span><span style="color: darkgoldenrod"><br/> Btc:</span><span style="color: green">{{burstPriceBtc}}</span> </div>
+        </div>
+    
+        <div class="ui-g-6">
+            <div class="ui-float-label">
                 <input [(ngModel)]="walletId" id="walletId" type="text" pInputText> 
                 <label for="walletId">Numeric Id</label>
-            </span>
+            </div>
+        </div>
+        <div class="ui-g-6">
                 <button pButton type="button" label="Get Info" (click)="reloadData()"></button>
-            
         </div>
     </div>
     <ng-container *ngIf="walletData">
@@ -21,15 +23,17 @@
         <br/>
         <span style="color: darkgoldenrod">Description: </span>{{description}}
         <br/>
-        <span style="color: darkgoldenrod">Balance: </span>{{currentBalance | number:'0.8-8'}} <span style="color: green;">${{walletAmountUSD | number: '0.2-2'}}</span>
+        <span style="color: darkgoldenrod">Balance: </span>{{currentBalance | number:'0.8-8'}} <span style="color: green;background: white;">${{walletAmountUSD | number: '0.2-2'}}</span>
+        <br/>
+        <span style="color: darkgoldenrod">Payout Threshold: </span>{{payoutThreshhold | number: '0.8-8'}}
         <br/>
    
 
         <ng-container *ngIf="paymentData">
-            <span style="color: darkgoldenrod">Pending: </span>{{ pendingPayment | number:'0.8-8'}} <span style="color: green;">${{pendingUSD | number: '0.2-2'}}</span>
+            <span style="color: darkgoldenrod">Pending: </span>{{ pendingPayment | number:'0.8-8'}} <span style="color: green;background: white;">${{pendingUSD | number: '0.2-2'}}</span>
             <br/>
-            <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimatedRevenue | number:'0.8-8'}} <span style="color: green;">${{estimatedUSD | number: '0.2-2'}}</span><br/>
-            <span style="color: darkgoldenrod">Total Share: </span>{{ minerShare | number:'0.4-4'}} / {{ totalShare | number:'0.4-4'}} <span style="color: green;">%{{estimatedPercentage | number:'0.2-2'}}</span><br/>
+            <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimatedRevenue | number:'0.8-8'}} <span style="color: green;background: white;">${{estimatedUSD | number: '0.2-2'}}</span><br/>
+            <span style="color: darkgoldenrod">Total Share: </span>{{ minerShare | number:'0.4-4'}} / {{ totalShare | number:'0.4-4'}} <span style="color: green;background: white;">%{{estimatedPercentage | number:'0.2-2'}}</span><br/>
             <hr/>
             
         <br/>

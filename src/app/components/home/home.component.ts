@@ -37,6 +37,8 @@ export class HomeComponent implements OnInit {
   pendingUSD: number;
   estimatedUSD: number;
   estimatedPercentage: number;
+  payoutThreshhold: any;
+  burstPriceBtc: number;
   constructor(private _btfgService: BtfgService) { 
     
   }
@@ -64,9 +66,17 @@ export class HomeComponent implements OnInit {
 
   _burstData() {
     this.loading = true;
+    this._btfgService.getThreshold(this.walletId)
+    .subscribe((data) => {
+      this.payoutThreshhold = data['Threshold'];
+      if(this.payoutThreshhold == 'Pool Default') {
+        this.payoutThreshhold = 20;
+      }
+    })
     this._btfgService.getBurstInfo()
     .subscribe((data) => {
       this.burstPrice = data[0].price_usd;
+      this.burstPriceBtc = data[0].price_btc;
       this.walletAmountUSD = this.burstPrice * this.currentBalance;
       this.pendingUSD = this.pendingPayment * this.burstPrice;
       this.estimatedUSD = this.estimatedRevenue * this.burstPrice;
