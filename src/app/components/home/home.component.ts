@@ -6,6 +6,7 @@ import { BtfgService } from 'app/components/home/btfg.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent implements OnInit {
   walletId: number;
   lastUpdated: string;
@@ -39,6 +40,7 @@ export class HomeComponent implements OnInit {
   estimatedPercentage: number;
   payoutThreshhold: any;
   burstPriceBtc: number;
+
   constructor(private _btfgService: BtfgService) { 
     
   }
@@ -78,6 +80,7 @@ export class HomeComponent implements OnInit {
       this.burstPrice = data[0].price_usd;
       this.burstPriceBtc = data[0].price_btc;
       this.walletAmountUSD = this.burstPrice * this.currentBalance;
+      
       this.pendingUSD = this.pendingPayment * this.burstPrice;
       this.estimatedUSD = this.estimatedRevenue * this.burstPrice;
     })
@@ -102,6 +105,7 @@ export class HomeComponent implements OnInit {
         this.blockLabels = [];
         this.minerShare = 0;
         this.totalShare = 0;
+        
         this.paymentData = data;
         if (this.paymentData) {
           if (this.paymentData['pendingPaymentList'][this.walletId]) {
@@ -153,6 +157,7 @@ export class HomeComponent implements OnInit {
         this.loading = true;
         this.walletData = data;
         this.currentBalance = (this.walletData['effectiveBalanceNXT'] / 100000000);
+        
         this.address = this.walletData['accountRS'];
         if ('name' in this.walletData) {
           this.name = this.walletData['name']
