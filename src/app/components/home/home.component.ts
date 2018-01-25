@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
   walletAmountUSD: number;
   pendingUSD: number;
   estimatedUSD: number;
+  estimatedPercentage: number;
   constructor(private _btfgService: BtfgService) { 
     
   }
@@ -58,9 +59,6 @@ export class HomeComponent implements OnInit {
       const d = new Date();
       this.lastUpdated = d.toLocaleString();
       this._burstData();
-      setTimeout(() => {
-        this.click = 0;
-      }, 80000)
     }
   }
 
@@ -123,7 +121,8 @@ export class HomeComponent implements OnInit {
         if (this.totalShare === 0) {
           this.estimatedRevenue = 0;
         } else {
-          this.estimatedRevenue = (this.minerShare * this.blockReward) / this.totalShare
+          this.estimatedRevenue = (this.minerShare * this.blockReward) / this.totalShare;
+          this.estimatedPercentage = (this.minerShare / this.totalShare) * 100;
         }
     
         this.chartData = {
@@ -155,12 +154,4 @@ export class HomeComponent implements OnInit {
         this.loading = false;
       })
   }
-
-  disabled() {
-    
-    if (this.walletId && this.click > 0) {
-      return true;
-    }
-  }
-
 }
