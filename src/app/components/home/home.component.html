@@ -1,11 +1,11 @@
-<span style="color: darkgoldenrod">Last Updated: </span>{{lastUpdated}}<br/>
-<div class="container">
+<span class=" animated fadeIn"style="color: darkgoldenrod">Last Updated: </span>{{lastUpdated}}<br/>
+<div class="container animated fadeIn">
     <span *ngIf="loading">Loading.....</span><br/>
-    <div class="ui-g ui-fluid">
+    <div class="ui-g ui-fluid animated fadeIn">
             <div class="ui-g-12">
     <div style="background: white;color: black;"> <span style="color: darkgoldenrod">Burst:</span> <span style="color: green">${{burstPrice}}</span><span style="color: darkgoldenrod"><br/> Btc:</span><span style="color: green">{{burstPriceBtc}}</span> </div>
         </div>
-    
+      
         <div class="ui-g-6">
             <div class="ui-float-label">
                 <input [(ngModel)]="walletId" id="walletId" type="text" pInputText> 
@@ -13,10 +13,10 @@
             </div>
         </div>
         <div class="ui-g-6">
-                <button pButton type="button" label="Get Info" (click)="reloadData()"></button>
+                <button pButton type="button" label=" " (click)="reloadData()">{{buttonLabel}}</button>
         </div>
     </div>
-    <ng-container *ngIf="walletData">
+    <div *ngIf="walletData" class="animated fadeIn">
         <span style="color: darkgoldenrod">Address: </span>{{address}}
         <br/>
         <span style="color: darkgoldenrod">Name: </span>{{name}}
@@ -29,7 +29,7 @@
         <br/>
    
 
-        <ng-container *ngIf="paymentData">
+        
             <span style="color: darkgoldenrod">Pending: </span>{{ pendingPayment | number:'0.8-8'}} <span style="color: green;background: white;">${{pendingUSD | number: '0.2-2'}}</span>
             <br/>
             <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimatedRevenue | number:'0.8-8'}} <span style="color: green;background: white;">${{estimatedUSD | number: '0.2-2'}}</span><br/>
@@ -37,17 +37,32 @@
             <hr/>
             
         <br/>
-        </ng-container>
-        <ng-container *ngIf="paymentData">
+        
             <span style="color: green;">{{ currentBlock}}:</span> Mining....
             <br/>
             <p-chart type="horizontalBar" [data]="chartData"></p-chart>
             <hr/>
-        </ng-container>
-    </ng-container>
-    Donations:<br/>
-    <a href="https://explore.burst.cryptoguru.org/account/2502243242455039725" target="_blank"><img src="../../../assets/donation.png" /></a>
+        
     </div>
+    <div class="ui-g ui-fluid animated fadeIn">
+        
+  
+    <div class="ui-g-6">
+        <div class="ui-float-label">
+            <input [(ngModel)]="tera" id="tera" type="text" pInputText> 
+            <label for="tera">Deadline Calculator (TB)</label>
+        </div>
+    </div>
+    <div class="ui-g-6">
+        <button pButton type="button" label="Calculate" (click)="calcDeadline(tera)"></button>
+    </div>
+    <div id="results">{{result | number: '0.0-0'}} is your target deadline.<br/></div>
+
+
+    
+    </div>
+
+    <a  href="https://explore.burst.cryptoguru.org/account/2502243242455039725" target="_blank"><img style="margin:0 auto;" width="100" height="100" src="../../../assets/donation.png" /></a>
     
 
     

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BtfgService } from 'app/components/home/btfg.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import { BtfgService } from 'app/components/home/btfg.service';
 })
 
 export class HomeComponent implements OnInit {
-  walletId: number;
+  walletId: string;
   lastUpdated: string;
   currentBlock: number;
   walletBalance: number;
@@ -30,8 +31,6 @@ export class HomeComponent implements OnInit {
   blockReward: number;
   paymentData: Object;
   chartData: any;
-  _disabled =  false;
-  click = 0;
   options: Object;
   burstPrice: number;
   walletAmountUSD: number;
@@ -40,8 +39,14 @@ export class HomeComponent implements OnInit {
   estimatedPercentage: number;
   payoutThreshhold: any;
   burstPriceBtc: number;
-
-  constructor(private _btfgService: BtfgService) { 
+  buttonLabel = 'Get Info';
+  click = 0;
+  result;
+  @ViewChild('myInput') myInput: ElementRef;
+  constructor(
+    private _btfgService: BtfgService,
+    private cdr: ChangeDetectorRef
+  ) { 
     
   }
 
@@ -50,7 +55,7 @@ export class HomeComponent implements OnInit {
     const d = new Date();
     this.lastUpdated = d.toLocaleString();
     this.loading = false;
-    this.click = 0;
+    
     setInterval(() => {
       this.reloadData()
       console.log('reloaded');
@@ -58,8 +63,14 @@ export class HomeComponent implements OnInit {
   }
 
   reloadData() {
+    this.click++;
+    
+    if(this.click >= 1) {
+  
+      this.buttonLabel = 'Refresh';
+      
+    }
     if (this.walletId) {
-      this.click++;
       const d = new Date();
       this.lastUpdated = d.toLocaleString();
       this._burstData();
@@ -168,5 +179,8 @@ export class HomeComponent implements OnInit {
       }, (err) => console.log(err), () => {
         this.loading = false;
       })
+  }
+  calcDeadline(tera){
+   this.result = 193016045 / tera;
   }
 }
