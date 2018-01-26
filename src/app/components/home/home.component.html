@@ -56,7 +56,7 @@
     <div class="ui-g-6">
         <button pButton type="button" label="Calculate" (click)="calcDeadline(tera)"></button>
     </div>
-    <div id="results">{{result | number: '0.0-0'}} is your target deadline.<br/></div>
+    <div *ngIf="result" id="results">{{result | number: '0.0-0'}} is your target deadline.<br/></div>
 
 
     
