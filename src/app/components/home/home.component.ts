@@ -90,10 +90,6 @@ export class HomeComponent implements OnInit {
     .subscribe((data) => {
       this.burstPrice = data[0].price_usd;
       this.burstPriceBtc = data[0].price_btc;
-      this.walletAmountUSD = this.burstPrice * this.currentBalance;
-      
-      this.pendingUSD = this.pendingPayment * this.burstPrice;
-      this.estimatedUSD = this.estimatedRevenue * this.burstPrice;
     })
     this._btfgService.getBlockchainStatus()
       .subscribe((data) => {
@@ -121,12 +117,14 @@ export class HomeComponent implements OnInit {
         if (this.paymentData) {
           if (this.paymentData['pendingPaymentList'][this.walletId]) {
             this.pendingPayment = this.paymentData['pendingPaymentList'][this.walletId]
+            this.pendingUSD = this.pendingPayment * this.burstPrice;
           } else {
             this.pendingPayment = 0;
           }
           for (const pending_id of this.paymentData['pendingPaymentList']) {
             this.totalPending += this.paymentData['pendingPaymentList'][pending_id]
           }
+   
           for (const block of this.paymentData['blockPaymentList']) {
             this.blockLabels.push(block['height']);
             this.totalShare += block['totalShare']
@@ -148,6 +146,7 @@ export class HomeComponent implements OnInit {
         } else {
           this.estimatedRevenue = (this.minerShare * this.blockReward) / this.totalShare;
           this.estimatedPercentage = (this.minerShare / this.totalShare) * 100;
+          this.estimatedUSD = this.estimatedRevenue * this.burstPrice;
         }
     
         this.chartData = {
@@ -168,7 +167,9 @@ export class HomeComponent implements OnInit {
         this.loading = true;
         this.walletData = data;
         this.currentBalance = (this.walletData['effectiveBalanceNXT'] / 100000000);
-        
+        this.walletAmountUSD = this.burstPrice * this.currentBalance;
+      
+     
         this.address = this.walletData['accountRS'];
         if ('name' in this.walletData) {
           this.name = this.walletData['name']
