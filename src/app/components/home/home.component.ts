@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
   buttonLabel = 'Get Info';
   click = 0;
   result;
+  payoutThreshholdString;
   @ViewChild('myInput') myInput: ElementRef;
   constructor(
     private _btfgService: BtfgService,
@@ -84,6 +85,10 @@ export class HomeComponent implements OnInit {
       this.payoutThreshhold = data['Threshold'];
       if(this.payoutThreshhold == 'Pool Default') {
         this.payoutThreshhold = 20;
+      }
+      console.log(this.payoutThreshhold)
+      if(this.payoutThreshhold == 0 ) {
+        this.payoutThreshholdString = 'Weekly';
       }
     })
     this._btfgService.getBurstInfo()

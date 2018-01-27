@@ -25,7 +25,8 @@
         <br/>
         <span style="color: darkgoldenrod">Balance: </span>{{currentBalance | number:'0.8-8'}} <span style="color: green;background: white;">${{walletAmountUSD | number: '0.2-2'}}</span>
         <br/>
-        <span style="color: darkgoldenrod">Payout Threshold: </span>{{payoutThreshhold | number: '0.8-8'}}
+        
+        <span style="color: darkgoldenrod">Payout Threshold: </span><ng-container *ngIf="!payoutThreshholdString">{{payoutThreshhold | number: '0.8-8'}}</ng-container> <span *ngIf="payoutThreshholdString">{{payoutThreshholdString}}</span>
         <br/>
    
 
