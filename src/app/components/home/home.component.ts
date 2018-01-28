@@ -44,9 +44,9 @@ export class HomeComponent implements OnInit {
   result;
   payoutThreshholdString;
   @ViewChild('myInput') myInput: ElementRef;
+  @ViewChild('teraInput') teraInput: ElementRef;
   constructor(
     private _btfgService: BtfgService,
-    private cdr: ChangeDetectorRef
   ) { 
     
   }
@@ -85,6 +85,7 @@ export class HomeComponent implements OnInit {
       this.payoutThreshhold = data['Threshold'];
       if(this.payoutThreshhold == 'Pool Default') {
         this.payoutThreshhold = 20;
+        this.payoutThreshholdString = null;
       }
       console.log(this.payoutThreshhold)
       if(this.payoutThreshhold == 0 ) {
@@ -189,4 +190,10 @@ export class HomeComponent implements OnInit {
   calcDeadline(tera){
    this.result = 193016045 / tera;
   }
-}
+
+  selectAll(){
+    this.myInput.nativeElement.select();
+  }
+  selectTera(){
+    this.teraInput.nativeElement.select();
+  }

@@ -8,7 +8,7 @@
       
         <div class="ui-g-6">
             <div class="ui-float-label">
-                <input [(ngModel)]="walletId" id="walletId" type="text" pInputText> 
+                <input #myInput [(ngModel)]="walletId" id="walletId" type="text" pInputText (focus)="selectAll()"> 
                 <label for="walletId">Numeric Id</label>
             </div>
         </div>
@@ -50,7 +50,7 @@
   
     <div class="ui-g-6">
         <div class="ui-float-label">
-            <input [(ngModel)]="tera" id="tera" type="text" pInputText> 
+            <input #teraInput [(ngModel)]="tera" id="tera" type="text" pInputText (focus)="selectTera()"> 
             <label for="tera">Deadline Calculator (TB)</label>
         </div>
     </div>
