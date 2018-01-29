@@ -20,6 +20,7 @@ import { HomeComponent } from './components/home/home.component';
 import { BtfgService } from 'app/components/home/btfg.service';
 import {InputTextModule} from 'primeng/components/inputtext/inputtext';
 import {ButtonModule} from 'primeng/components/button/button';
+import {DropdownModule} from 'primeng/components/dropdown/dropdown';
 import {ChartModule} from 'primeng/chart';
 import 'chart.js/dist/Chart.min.js';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -44,6 +45,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ButtonModule,
     ChartModule,
     TeximateModule,
+    DropdownModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

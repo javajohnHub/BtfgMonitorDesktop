@@ -1,20 +1,30 @@
-<span class=" animated fadeIn"style="color: darkgoldenrod">Last Updated: </span>{{lastUpdated}}<br/>
+<span class=" animated fadeIn" style="color: darkgoldenrod">Last Updated: </span>{{lastUpdated}}
+<br/>
 <div class="container animated fadeIn">
-    <span *ngIf="loading">Loading.....</span><br/>
+    <span *ngIf="loading">Loading.....</span>
+    <br/>
     <div class="ui-g ui-fluid animated fadeIn">
-            <div class="ui-g-12">
-    <div style="background: white;color: black;"> <span style="color: darkgoldenrod">Burst:</span> <span style="color: green">${{burstPrice}}</span><span style="color: darkgoldenrod"><br/> Btc:</span><span style="color: green">{{burstPriceBtc}}</span> </div>
+        <div class="ui-g-12">
+                <p-dropdown [options]="currencies" [(ngModel)]="selectedCurrency" appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
+            <div style="background: white;color: black;">
+                <span *ngIf="this.selectedCurrency" style="color: darkgoldenrod">{{this.selectedCurrency.name}}:</span>
+                <span style="color: green">{{burstPrice}}</span> 
+                <span style="color: darkgoldenrod">
+                    <br/> Burst/Btc:</span>
+                <span style="color: green">{{burstPriceBtc}}</span>
+            </div>
         </div>
-      
+
         <div class="ui-g-6">
             <div class="ui-float-label">
-                <input #myInput [(ngModel)]="walletId" id="walletId" type="text" pInputText (focus)="selectAll()"> 
+                <input #myInput [(ngModel)]="walletId" id="walletId" type="text" pInputText (focus)="selectAll()">
                 <label for="walletId">Numeric Id</label>
             </div>
         </div>
         <div class="ui-g-6">
-                <button pButton type="button" label=" " (click)="reloadData()">{{buttonLabel}}</button>
+            <button pButton type="button" label=" " (click)="reloadData()">{{buttonLabel}}</button>
         </div>
+        
     </div>
     <div *ngIf="walletData" class="animated fadeIn">
         <span style="color: darkgoldenrod;">Address: </span>{{address}}
@@ -23,47 +33,56 @@
         <br/>
         <span style="color: darkgoldenrod">Description: </span>{{description}}
         <br/>
-        <span style="color: darkgoldenrod">Balance: </span>{{currentBalance | number:'0.8-8'}} <span style="color: green;background: white;border-radius: 5px;padding: 2px;">${{walletAmountUSD | number: '0.2-2'}}</span>
+        <span style="color: darkgoldenrod">Balance: </span>{{currentBalance | number:'0.8-8'}}
+        <span style="color: green;background: white;border-radius: 5px;padding: 2px;">({{walletAmountUSD | number: '0.2-2'}} {{this.selectedCurrency.name}})</span>
         <br/>
-        
-        <span style="color: darkgoldenrod">Payout Threshold: </span><ng-container *ngIf="!payoutThreshholdString">{{payoutThreshhold | number: '0.8-8'}}</ng-container> <span *ngIf="payoutThreshholdString">{{payoutThreshholdString}}</span>
-        <br/>
-   
 
-        
-            <span style="color: darkgoldenrod">Pending: </span>{{ pendingPayment | number:'0.8-8'}} <span style="color: green;background: white;border-radius: 5px;padding: 2px;">${{pendingUSD | number: '0.2-2'}}</span>
-            <br/>
-            <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimatedRevenue | number:'0.8-8'}} <span style="color: green;background: white;border-radius: 5px;padding: 2px;">${{estimatedUSD | number: '0.2-2'}}</span><br/>
-            <span style="color: darkgoldenrod">Total Share: </span>{{ minerShare | number:'0.4-4'}} / {{ totalShare | number:'0.4-4'}} <span style="color: green;background: white;border-radius: 5px;padding: 2px;">%{{estimatedPercentage | number:'0.2-2'}}</span><br/>
-            <hr/>
-            
+        <span style="color: darkgoldenrod">Payout Threshold: </span>
+        <ng-container *ngIf="!payoutThreshholdString">{{payoutThreshhold | number: '0.8-8'}}</ng-container>
+        <span *ngIf="payoutThreshholdString">{{payoutThreshholdString}}</span>
         <br/>
-        
-            <span style="color: green;">{{ currentBlock}}:</span> Mining....
-            <br/>
-            <p-chart type="horizontalBar" [data]="chartData"></p-chart>
-            <hr/>
-        
+
+
+
+        <span style="color: darkgoldenrod">Pending: </span>{{ pendingPayment | number:'0.8-8'}}
+        <span style="color: green;background: white;border-radius: 5px;padding: 2px;">({{pendingUSD | number: '0.2-2'}} {{this.selectedCurrency.name}})</span>
+        <br/>
+        <span style="color: darkgoldenrod">Estimated Revenue: </span>{{estimatedRevenue | number:'0.8-8'}}
+        <span style="color: green;background: white;border-radius: 5px;padding: 2px;">({{estimatedUSD | number: '0.2-2'}} {{this.selectedCurrency.name}})</span>
+        <br/>
+        <span style="color: darkgoldenrod">Total Share: </span>{{ minerShare | number:'0.4-4'}} / {{ totalShare | number:'0.4-4'}}
+        <span style="color: green;background: white;border-radius: 5px;padding: 2px;">%{{estimatedPercentage | number:'0.2-2'}}</span>
+        <br/>
+        <hr/>
+
+        <br/>
+
+        <span style="color: green;">{{ currentBlock}}:</span> Mining....
+        <br/>
+        <p-chart type="horizontalBar" [data]="chartData"></p-chart>
+        <hr/>
+
     </div>
     <div class="ui-g ui-fluid animated fadeIn">
-        
-  
-    <div class="ui-g-6">
-        <div class="ui-float-label">
-            <input #teraInput [(ngModel)]="tera" id="tera" type="text" pInputText (focus)="selectTera()"> 
-            <label for="tera">Deadline Calculator (TB)</label>
+
+
+        <div class="ui-g-6">
+            <div class="ui-float-label">
+                <input #teraInput [(ngModel)]="tera" id="tera" type="text" pInputText (focus)="selectTera()">
+                <label for="tera">Deadline Calculator (TB)</label>
+            </div>
         </div>
+        <div class="ui-g-6">
+            <button pButton type="button" label="Calculate" (click)="calcDeadline(tera)"></button>
+        </div>
+        <div *ngIf="result" id="results">{{result | number: '0.0-0'}} is your target deadline.
+            <br/>
+        </div>
+
+
+
     </div>
-    <div class="ui-g-6">
-        <button pButton type="button" label="Calculate" (click)="calcDeadline(tera)"></button>
-    </div>
-    <div *ngIf="result" id="results">{{result | number: '0.0-0'}} is your target deadline.<br/></div>
 
-
-    
-    </div>
-
-    <a  href="https://explore.burst.cryptoguru.org/account/2502243242455039725" target="_blank"><img style="margin:0 auto;" width="100" height="100" src="../../../assets/donation.png" /></a>
-    
-
-    
+    <a href="https://explore.burst.cryptoguru.org/account/2502243242455039725" target="_blank">
+        <img style="margin:0 auto;" width="100" height="100" src="../../../assets/donation.png" />
+    </a>

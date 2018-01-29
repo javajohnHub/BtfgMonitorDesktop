@@ -23,8 +23,9 @@ export class BtfgService {
     getBlockInfo() {
         return this._http.get('https://wallet.burst.cryptoguru.org:8125/burst?requestType=getBlocks&firstIndex=1&lastIndex=1');
     }
-    getBurstInfo() {
-        return this._http.get('https://api.coinmarketcap.com/v1/ticker/burst/?convert=USD');
+    getBurstInfo(currency) {
+        console.log(currency)
+        return this._http.get('https://api.coinmarketcap.com/v1/ticker/burst/?convert=' + currency);
     }
     getThreshold(walletId) {
         return this._http.get('http://burst.btfg.space:8000/btfgminpayment.php?id=' + walletId);
