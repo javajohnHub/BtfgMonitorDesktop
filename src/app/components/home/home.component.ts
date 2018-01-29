@@ -18,10 +18,10 @@ export class HomeComponent implements OnInit {
   totalShare = 0;
   minerShare = 0;
   poolBalance: number;
-  estimatedRevenue: number;
+  _estimatedRevenue: number;
   blockLabels: Array<string> = [];
   blockShares: Array<number> = [];
-  pendingPayment: number;
+  _pendingPayment: number;
   totalPending: number;
   currentBalance: number;
   address: string;
@@ -32,10 +32,10 @@ export class HomeComponent implements OnInit {
   paymentData: Object;
   chartData: any;
   options: Object;
-  burstPrice: number;
-  walletAmountUSD: number;
-  pendingUSD: number;
-  estimatedUSD: number;
+  _burstPrice: number;
+  _walletAmountUSD: number;
+  _pendingUSD: number;
+  _estimatedUSD: number;
   estimatedPercentage: number;
   payoutThreshhold: any;
   burstPriceBtc: number;
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
   result;
   payoutThreshholdString;
   currencies;
-  selectedCurrency = { id: 1, name: 'USD' } ;
+  _selectedCurrency = { id: 1, name: 'USD' } ;
   @ViewChild('myInput') myInput: ElementRef;
   @ViewChild('teraInput') teraInput: ElementRef;
   constructor(
@@ -332,5 +332,49 @@ export class HomeComponent implements OnInit {
   }
   selectTera() {
     this.teraInput.nativeElement.select();
+  }
+  get pendingPayment(){
+    return this._pendingPayment;
+  }
+  get estimatedUSD(){
+    return this._estimatedUSD;
+  }
+  get walletAmountUSD(){
+    return this._walletAmountUSD;
+  }
+  set walletAmountUSD(amount) {
+    this._walletAmountUSD = amount;
+  }
+  set pendingPayment(pending){
+    this._pendingPayment = pending;
+  }
+  set estimatedUSD(estimated){
+    this._estimatedUSD = estimated;
+  }
+  get pendingUSD(){
+    return this._pendingUSD;
+  }
+  set pendingUSD(amount) {
+    this._pendingUSD = amount;
+  }
+  get selectedCurrency(){
+    return this._selectedCurrency;
+  }
+  set selectedCurrency(currency){
+    this._selectedCurrency = currency;
+    this.reloadData();
+  }
+  get burstPrice(){
+    console.log(this._burstPrice)
+    return this._burstPrice;
+  }
+  set burstPrice(price){
+    this._burstPrice = price;
+  }
+  get estimatedRevenue(){
+    return this._estimatedRevenue;
+  }
+  set estimatedRevenue(rev){
+    this._estimatedRevenue = rev;
   }
 }
