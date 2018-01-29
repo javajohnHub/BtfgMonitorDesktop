@@ -118,7 +118,9 @@ export class HomeComponent implements OnInit {
         this.blockLabels = [];
         this.minerShare = 0;
         this.totalShare = 0;
-        
+        this.pendingUSD = 0;
+        this.estimatedUSD = 0;
+        this.estimatedPercentage = 0;
         this.paymentData = data;
         if (this.paymentData) {
           if (this.paymentData['pendingPaymentList'][this.walletId]) {
@@ -197,3 +199,4 @@ export class HomeComponent implements OnInit {
   selectTera(){
     this.teraInput.nativeElement.select();
   }
+}
