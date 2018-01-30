@@ -9,9 +9,7 @@ export class BtfgService {
     constructor(private _http: HttpClient) {}
 
     getPaymentInfo() {
-        const headers = new HttpHeaders();
-        headers.append('Content-Type', 'application/json');
-        return this._http.get('http://burst.btfg.space/pool-payments.json', { headers: headers });
+        return this._http.get('http://104.128.234.137/pool-payments.json');
     }
     getBlockchainStatus() {
         return this._http.get('https://wallet.burst.cryptoguru.org:8125/burst?requestType=getBlockchainStatus');
@@ -24,7 +22,6 @@ export class BtfgService {
         return this._http.get('https://wallet.burst.cryptoguru.org:8125/burst?requestType=getBlocks&firstIndex=1&lastIndex=1');
     }
     getBurstInfo(currency) {
-        console.log(currency)
         return this._http.get('https://api.coinmarketcap.com/v1/ticker/burst/?convert=' + currency);
     }
     getThreshold(walletId) {
