@@ -5,7 +5,12 @@
     <br/>
     <div class="ui-g ui-fluid animated fadeIn">
         <div class="ui-g-12">
+                <div class="ui-g-6">
                 <p-dropdown [options]="currencies" [(ngModel)]="selectedCurrency" appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
+                </div>
+                <div class="ui-g-6">
+                        <p-dropdown [options]="sources" [(ngModel)]="selectedSource" appendTo="body" [style]="{'width':'100%'}"></p-dropdown>
+                </div>
             <div style="background: white;color: black;">
                 <span *ngIf="this.selectedCurrency" style="color: darkgoldenrod">{{this.selectedCurrency.name}}:</span>
                 <span style="color: green">{{burstPrice}}</span> 

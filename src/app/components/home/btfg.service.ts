@@ -8,8 +8,8 @@ export class BtfgService {
 
     constructor(private _http: HttpClient) {}
 
-    getPaymentInfo() {
-        return this._http.get('http://104.128.234.137/pool-payments.json');
+    getPaymentInfo(source) {
+        return this._http.get(source);
     }
     getBlockchainStatus() {
         return this._http.get('https://wallet.burst.cryptoguru.org:8125/burst?requestType=getBlockchainStatus');

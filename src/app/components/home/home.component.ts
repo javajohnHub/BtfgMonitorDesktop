@@ -45,6 +45,8 @@ export class HomeComponent implements OnInit {
   payoutThreshholdString;
   currencies;
   _selectedCurrency = { id: 1, name: 'USD' } ;
+  _selectedSource = { id: 1, url: 'http://burst.btfg.space/pool-payments.json' };
+  sources;
   @ViewChild('myInput') myInput: ElementRef;
   @ViewChild('teraInput') teraInput: ElementRef;
   constructor(
@@ -85,6 +87,13 @@ export class HomeComponent implements OnInit {
       { label: 'TWD', value: { id: 31, name: 'TWD' } },
       { label: 'ZAR', value: { id: 32, name: 'ZAR' } },
     ];
+
+    this.sources = [
+      { label: 'Select Source', value: { id: 1, url: 'http://burst.btfg.space/pool-payments.json' }  },
+      { label: '.space', value: { id: 1, url: 'http://burst.btfg.space/pool-payments.json' } },
+      { label: '.com', value: { id: 2, url: 'http://burst.drecanis.com/pool-payments.json' } },
+      { label: 'ip', value: { id: 3, url: 'http://104.128.234.137/pool-payments.json' } },
+    ]
   }
 
   ngOnInit() {
@@ -245,7 +254,7 @@ export class HomeComponent implements OnInit {
         this.blockReward = this.blockData['blocks'][0]['blockReward']
         this.loading = false;
       })
-    this._btfgService.getPaymentInfo()
+    this._btfgService.getPaymentInfo(this.selectedSource.url)
       .subscribe((data) => {
         this.loading = true;
         this.blockShares = [];
@@ -364,8 +373,14 @@ export class HomeComponent implements OnInit {
     this._selectedCurrency = currency;
     this.reloadData();
   }
+  get selectedSource(){
+    return this._selectedSource;
+  }
+  set selectedSource(source){
+    this._selectedSource = source;
+    this.reloadData();
+  }
   get burstPrice(){
-    console.log(this._burstPrice)
     return this._burstPrice;
   }
   set burstPrice(price){
